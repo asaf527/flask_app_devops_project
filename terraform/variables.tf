@@ -4,8 +4,9 @@ variable "region" {
 }
 
 variable "bucket_name" {
-    type = string 
-    default = "regtech-iac-terraform-state-2024"
+  type        = string
+  default     = "regtech-iac-logs-2024"  # Update this to your desired bucket name
+  description = "Name of the S3 bucket for storing logs and CloudTrail data"
 }
 
 variable "aws_access_key_id" {

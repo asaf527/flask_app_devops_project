@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket = "regtech-iac-terraform-state-2024"  # Changed bucket name
+    bucket = "regtech-iac-logs-2024"  # Use the same name as in variables.tf
     key    = "terraform.tfstate"
     region = "us-east-1"
-    encrypt = true 
+    encrypt = true
   }
 }
 

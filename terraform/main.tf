@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "regtech-iac"
-    key = "terraform.tfstate"
+    bucket = "regtech-iac-terraform-state-2024"  # Changed bucket name
+    key    = "terraform.tfstate"
     region = "us-east-1"
     encrypt = true 
   }
@@ -68,7 +68,7 @@ resource "aws_ebs_volume" "volume_regtech"{
     kms_key_id        = aws_kms_key.ebs_encryption_key.arn
 }
 
-resource "aws_s3_bucket" "regtech_iac" {
+resource "aws_s3_bucket" "regtech-iac-terraform-state-2024" {
   bucket = var.bucket_name
 }
 

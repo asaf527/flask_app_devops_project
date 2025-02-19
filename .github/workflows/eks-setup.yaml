@@ -23,27 +23,28 @@ jobs:
     runs-on: ubuntu-latest
     needs: LogInToAWS
     steps:
-      - name: Check if bucket exists
+      - name: Check and Create S3 bucket
         run: |
-          if ! aws s3api head-bucket --bucket regtech-iac 2>/dev/null; then
+          BUCKET_NAME="regtech-iac-terraform-state-2024"
+          
+          if ! aws s3api head-bucket --bucket $BUCKET_NAME 2>/dev/null; then
             echo "Bucket does not exist. Creating..."
             aws s3api create-bucket \
-              --bucket regtech-iac \
-              --region ${{ env.AWS_REGION }}
+              --bucket $BUCKET_NAME \
+              --region us-east-1
             
-            # Enable versioning for the new bucket
+            # Enable versioning
             aws s3api put-bucket-versioning \
-              --bucket regtech-iac \
+              --bucket $BUCKET_NAME \
               --versioning-configuration Status=Enabled
             
             echo "Bucket created successfully"
           else
             echo "Bucket already exists. Skipping creation."
           fi
-
   TerraformInit:
     runs-on: ubuntu-latest
-    needs: LogInToAWS
+    needs: CheckAndCreateS3Bucket
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

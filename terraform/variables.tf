@@ -5,7 +5,7 @@ variable "region" {
 
 variable "bucket_name" {
     type = string 
-    default = "regtech-logs"
+    default = "regtech-iac-terraform-state-2024"
 }
 
 variable "aws_access_key_id" {

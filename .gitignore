@@ -1,0 +1,13 @@
+# Python virtual environment
+regtech-docker-app/venv**
+venv/
+**/venv/
+ENV/
+.env
+.venv
+env/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class

@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket = "regtech-iac-logs-2024"  # Use the same name as in variables.tf
+    bucket = "regtech-iac-logs-2024"
     key    = "terraform.tfstate"
     region = "us-east-1"
-    encrypt = true
+    encrypt = true 
   }
 }
 
@@ -71,17 +71,6 @@ resource "aws_ebs_volume" "volume_regtech"{
 resource "aws_s3_bucket" "regtech-iac-terraform-state-2024" {
   bucket = var.bucket_name
 }
-
-resource "aws_s3_bucket_server_side_encryption_configuration" "regtech_iac_encrypt_config" {
-    bucket = aws_s3_bucket.regtech_iac.bucket
-    rule {
-        apply_server_side_encryption_by_default {
-        kms_master_key_id = aws_kms_key.s3_encryption_key.arn  
-        sse_algorithm = "aws:kms"
-        }
-    }
-}
-
 
 # OutPut Resources
 output "endpoint" {

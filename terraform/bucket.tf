@@ -1,10 +1,10 @@
-# Create the S3 bucket for logs and CloudTrail
+# S3 bucket for logs and state
 resource "aws_s3_bucket" "regtech_iac" {
   bucket = var.bucket_name
-  force_destroy = true  # Be careful with this in production
+  force_destroy = true
 }
 
-# Enable versioning for the bucket
+# Enable versioning
 resource "aws_s3_bucket_versioning" "regtech_iac_versioning" {
   bucket = aws_s3_bucket.regtech_iac.id
   versioning_configuration {

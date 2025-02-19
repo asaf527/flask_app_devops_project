@@ -18,6 +18,28 @@ jobs:
           aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+  
+  CheckAndCreateS3Bucket:
+    runs-on: ubuntu-latest
+    needs: LogInToAWS
+    steps:
+      - name: Check if bucket exists
+        run: |
+          if ! aws s3api head-bucket --bucket regtech-iac 2>/dev/null; then
+            echo "Bucket does not exist. Creating..."
+            aws s3api create-bucket \
+              --bucket regtech-iac \
+              --region ${{ env.AWS_REGION }}
+            
+            # Enable versioning for the new bucket
+            aws s3api put-bucket-versioning \
+              --bucket regtech-iac \
+              --versioning-configuration Status=Enabled
+            
+            echo "Bucket created successfully"
+          else
+            echo "Bucket already exists. Skipping creation."
+          fi
 
   TerraformInit:
     runs-on: ubuntu-latest
